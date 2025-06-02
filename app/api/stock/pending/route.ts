@@ -35,36 +35,17 @@ export async function POST(request: Request) {
       },
     });
 
-    function escapeMarkdown(text: string): string {
-      return text.replace(/[_*[\]()~`>#+\-=|{}.!]/g, (match) => `\\${match}`);
-    }
-
     const actualChatId = Config.telegram_chatId;
-
-    const rawText = `📢 มีรายการขอปรับสต็อกใหม่ในระบบ
-
-หมายเหตุ: ${body.note}
-
-กรุณาเข้าไปดำเนินการ!`;
-
-    const messageText = escapeMarkdown(rawText);
-
-    const inlineKeyboard = [
-      [
-        {
-          text: "🔍 ดำเนินการตอนนี้",
-          url: `${Config.app_url}/admin/dashboard`, // 🔗 เปลี่ยนเส้นทางตามหน้าที่ต้องการ
-        },
-      ],
-    ];
+    const messageText = `📢 มีรายการขอปรับสต็อกใหม่ในระบบ \n\nหมายเหตุ: ${body.note}\n\nกรุณาเข้าไปดำเนินการ!\nดูที่นี่: ${Config.app_url};
 
     const groupNotificationPayload = {
       chat_id: actualChatId,
       text: messageText,
-      parse_mode: "MarkdownV2",
-      reply_markup: {
-        inline_keyboard: inlineKeyboard,
-      },
+    }`;
+
+    const groupNotificationPayload = {
+      chat_id: actualChatId,
+      text: messageText,
     };
 
     sendTelegramNotification(groupNotificationPayload);

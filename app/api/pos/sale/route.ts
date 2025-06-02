@@ -124,44 +124,23 @@ export async function POST(request: Request) {
         },
       });
 
-      function escapeMarkdown(text: string): string {
-        return text.replace(/[_*[\]()~`>#+\-=|{}.!]/g, (match) => `\\${match}`);
-      }
-
       if (noti) {
         const actualChatId = Config.telegram_chatId;
 
-        const rawText = `📢 มีรายการขายใหม่ในระบบ
-
-รหัสคำสั่งซื้อ: ${String(noti.id).padStart(5, "0")}
-ยอดรวม: ${noti.total.toLocaleString("en-US", { minimumFractionDigits: 2 })}
-ช่องทางการชำระ: ${
-          noti.paymentType === "CASH"
-            ? "เงินสด"
-            : noti.paymentType === "TRANSFER"
-            ? "โอนผ่านธนาคาร"
-            : "ไม่ทราบ"
-        }
-ผู้ดำเนินการ: ${noti.users.name}`;
-
-        const messageText = escapeMarkdown(rawText);
-
-        const inlineKeyboard = [
-          [
-            {
-              text: "🔍 ตรวจสอบรายการ",
-              url: `${Config.app_url}/admin/salehistory/detail/${noti.id}`,
-            },
-          ],
-        ];
+        const rawText = `const messageText = 📢 มีรายการขายใหม่ในระบบ \n\nรหัสคำสั่งซื้อ: ${String(
+          noti.id
+        ).padStart(5, "0")}\nยอดรวม: ${noti.total.toLocaleString("en-US", {
+          minimumFractionDigits: 2,
+        })}\nช่องทางการชำระ: ${
+          (noti.paymentType == "CASH" && "เงินสด") ||
+          (noti.paymentType == "TRANSFER" && "โอนผ่านธนาคาร")
+        }\nผู้ดำเนินการ: ${noti.users.name}\n\nตรวจสอบรายการได้ที่: ${
+          Config.app_url + `/admin/salehistory/detail/${noti.id}`
+        }`;
 
         const groupNotificationPayload = {
           chat_id: actualChatId,
-          text: messageText,
-          parse_mode: "MarkdownV2",
-          reply_markup: {
-            inline_keyboard: inlineKeyboard,
-          },
+          text: rawText,
         };
 
         sendTelegramNotification(groupNotificationPayload);

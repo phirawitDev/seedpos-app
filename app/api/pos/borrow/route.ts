@@ -89,6 +89,7 @@ export async function POST(request: Request) {
         },
         select: {
           id: true,
+          total: true,
           users: {
             select: {
               name: true,
@@ -128,31 +129,17 @@ export async function POST(request: Request) {
             .join("\n");
         }
 
-        const rawText = `📢 มีรายการยืมใหม่ในระบบ
-
-รหัสคำสั่งซื้อ: ${String(noti.id).padStart(5, "0")}
-ผู้ดำเนินการ: ${noti.users.name}
-รายการสินค้า:
-${productListString}`;
-
-        const messageText = escapeMarkdown(rawText);
-
-        const inlineKeyboard = [
-          [
-            {
-              text: "🔍 ตรวจสอบรายการ",
-              url: `${Config.app_url}/admin/salehistory/detail/${noti.id}`, // 🔗 ปรับตาม path จริง
-            },
-          ],
-        ];
+        const messageText = `📢 มีรายการยืมใหม่ในระบบ \n\nรหัสคำสั่งซื้อ: ${String(
+          noti.id
+        ).padStart(5, "0")}\nผู้ดำเนินการ: ${
+          noti.users.name
+        }\nรายการสินค้า:\n${productListString}\n\nตรวจสอบรายการได้ที่: ${
+          Config.app_url + `/admin/sales/${noti.id})`
+        }`;
 
         const groupNotificationPayload = {
           chat_id: actualChatId,
           text: messageText,
-          parse_mode: "MarkdownV2",
-          reply_markup: {
-            inline_keyboard: inlineKeyboard,
-          },
         };
 
         sendTelegramNotification(groupNotificationPayload);
