@@ -351,15 +351,15 @@ export default function posPage() {
 
       const itemWithZeroPrice = selectedItems.find((item) => item.price === 0);
 
-      if (itemWithZeroPrice && !payToBorrow) {
-        Swal.fire({
-          icon: "warning",
-          title: "กรุณาตั้งราคาขาย",
-          text: `คุณยังไม่ได้ตั้งราคาขายสำหรับ "${itemWithZeroPrice.name}"`,
-          confirmButtonText: "ตกลง",
-        });
-        return;
-      }
+      // if (itemWithZeroPrice && !payToBorrow) {
+      //   Swal.fire({
+      //     icon: "warning",
+      //     title: "กรุณาตั้งราคาขาย",
+      //     text: `คุณยังไม่ได้ตั้งราคาขายสำหรับ "${itemWithZeroPrice.name}"`,
+      //     confirmButtonText: "ตกลง",
+      //   });
+      //   return;
+      // }
 
       if (payToCash == true || payToQr == true) {
         let paymentType = null;

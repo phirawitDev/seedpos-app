@@ -156,4 +156,6 @@ model SaleDetail {
   price     Float
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@map("SaleDetail")
 }
