@@ -278,8 +278,7 @@ export default function SaleHistoryPage() {
                     {sale.createdAt
                       ? format(
                           new Date(sale.createdAt),
-                          "dd/MM/yyyy เวลา HH:mm น.",
-                          { locale: th }
+                          "dd/MM/yyyy เวลา HH:mm น."
                         )
                       : "N/A"}
                   </td>
@@ -348,8 +347,7 @@ export default function SaleHistoryPage() {
                   {sale.createdAt
                     ? format(
                         new Date(sale.createdAt),
-                        "d/MM/yyyy เวลา HH:mm น.",
-                        { locale: th }
+                        "d/MM/yyyy เวลา HH:mm น."
                       )
                     : "N/A"}
                 </p>

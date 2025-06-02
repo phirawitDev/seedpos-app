@@ -221,8 +221,7 @@ export default function saleDetailPage() {
             {saleDetail?.createdAt
               ? format(
                   new Date(saleDetail.createdAt),
-                  "dd/MM/yyyy เวลา HH:mm น.",
-                  { locale: th }
+                  "dd/MM/yyyy เวลา HH:mm น."
                 )
               : "N/A"}
           </p>
