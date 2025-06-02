@@ -127,7 +127,7 @@ export async function POST(request: Request) {
       if (noti) {
         const actualChatId = Config.telegram_chatId;
 
-        const rawText = `const messageText = 📢 มีรายการขายใหม่ในระบบ \n\nรหัสคำสั่งซื้อ: ${String(
+        const rawText = `📢 มีรายการขายใหม่ในระบบ \n\nรหัสคำสั่งซื้อ: ${String(
           noti.id
         ).padStart(5, "0")}\nยอดรวม: ${noti.total.toLocaleString("en-US", {
           minimumFractionDigits: 2,

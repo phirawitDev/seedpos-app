@@ -35,8 +35,17 @@ export async function POST(request: Request) {
       },
     });
 
+    const noti = await prisma.pending.findFirst({
+      where: {
+        id: pending.id,
+      },
+      include: {
+        product: true,
+      },
+    });
+
     const actualChatId = Config.telegram_chatId;
-    const messageText = `📢 มีรายการขอปรับสต็อกใหม่ในระบบ \n\nหมายเหตุ: ${body.note}\n\nกรุณาเข้าไปดำเนินการ!\nดูที่นี่: ${Config.app_url};
+    const messageText = `📢 มีรายการขอปรับสต็อกใหม่ \n\nชื่อสินค้า: ${noti?.product.name}\nประเภทรายการ: ${noti?.type}\nจำนวน: ${noti?.quantity}\nหมายเหตุ: ${body.note}\n\nดูที่นี่: ${Config.app_url};
 
     const groupNotificationPayload = {
       chat_id: actualChatId,
