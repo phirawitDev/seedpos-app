@@ -290,7 +290,12 @@ export default function SaleHistoryPage() {
                   <td className="text-center">
                     {(sale?.paymentType == "CASH" && "เงินสด") ||
                       (sale?.paymentType == "TRANSFER" && "โอนผ่านธนาคาร") ||
-                      (sale.paymentType == "ITEMS" && "ชำระเป็นสินค้า")}
+                      (sale.paymentType == "ITEMS" &&
+                        sale.saleType == "BORROW" &&
+                        "คืนเป็นสินค้า") ||
+                      (sale.paymentType == "ITEMS" &&
+                        sale.saleType == "CASH" &&
+                        "คืนเป็นเงิน")}
                   </td>
                   <td className="text-center">{sale.users?.name}</td>
                   <td className="text-center">
@@ -365,7 +370,12 @@ export default function SaleHistoryPage() {
                 <p>
                   {(sale?.paymentType == "CASH" && "เงินสด") ||
                     (sale?.paymentType == "TRANSFER" && "โอนผ่านธนาคาร") ||
-                    (sale.paymentType == "ITEMS" && "ชำระเป็นสินค้า")}
+                    (sale.paymentType == "ITEMS" &&
+                      sale.saleType == "BORROW" &&
+                      "คืนเป็นสินค้า") ||
+                    (sale.paymentType == "ITEMS" &&
+                      sale.saleType == "CASH" &&
+                      "คืนเป็นเงิน")}
                 </p>
               </div>
               <div className="flex flex-row w-full gap-5 mt-2 text-xl border-b-1 border-gray-200 truncate">

@@ -174,7 +174,12 @@ export default function saleDetailPage() {
             วิธีการชำระเงิน:{" "}
             {(saleDetail?.paymentType == "CASH" && "เงินสด") ||
               (saleDetail?.paymentType == "TRANSFER" && "โอนผ่านธนาคาร") ||
-              (saleDetail?.paymentType == "ITEMS" && "ชำระเป็นสินค้า")}
+              (saleDetail?.paymentType == "ITEMS" &&
+                saleDetail.saleType == "BORROW" &&
+                "คืนเป็นสินค้า") ||
+              (saleDetail?.paymentType == "ITEMS" &&
+                saleDetail.saleType == "CASH" &&
+                "คืนเป็นเงิน")}
           </p>
           <p className="text-lg">พนักงานขาย: {saleDetail?.userName}</p>
           {saleDetail?.paymentType == "TRANSFER" && (
