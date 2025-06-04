@@ -289,14 +289,19 @@ export default function SaleHistoryPage() {
                     })}
                   </td>
                   <td className="text-center">
-                    {(sale?.paymentType == "CASH" && "เงินสด") ||
-                      (sale?.paymentType == "TRANSFER" && "โอนผ่านธนาคาร") ||
-                      (sale.paymentType == "ITEMS" &&
-                        sale.saleType == "BORROW" &&
-                        "คืนเป็นสินค้า") ||
-                      (sale.paymentType == "ITEMS" &&
-                        sale.saleType == "CASH" &&
-                        "คืนเป็นเงิน")}
+                    {sale?.saleType == "NORMAL" && (
+                      <div>
+                        {(sale?.paymentType == "CASH" && "เงินสด") ||
+                          (sale?.paymentType == "TRANSFER" && "โอนผ่านธนาคาร")}
+                      </div>
+                    )}
+                    {sale?.saleType == "BORROW" &&
+                      sale.status == "RETURNED" && (
+                        <div>
+                          {(sale.paymentType == "ITEMS" && "คืนเป็นสินค้า") ||
+                            (sale.paymentType == "CASH" && "คืนเป็นเงิน")}
+                        </div>
+                      )}
                   </td>
                   <td className="text-center">{sale.users?.name}</td>
                   <td className="text-center">

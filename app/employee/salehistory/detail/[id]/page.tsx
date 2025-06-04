@@ -172,14 +172,19 @@ export default function saleDetailPage() {
           </p>
           <p className="text-lg">
             วิธีการชำระเงิน:{" "}
-            {(saleDetail?.paymentType == "CASH" && "เงินสด") ||
-              (saleDetail?.paymentType == "TRANSFER" && "โอนผ่านธนาคาร") ||
-              (saleDetail?.paymentType == "ITEMS" &&
-                saleDetail.saleType == "BORROW" &&
-                "คืนเป็นสินค้า") ||
-              (saleDetail?.paymentType == "ITEMS" &&
-                saleDetail.saleType == "CASH" &&
-                "คืนเป็นเงิน")}
+            {saleDetail?.saleType == "NORMAL" && (
+              <div>
+                {(saleDetail?.paymentType == "CASH" && "เงินสด") ||
+                  (saleDetail?.paymentType == "TRANSFER" && "โอนผ่านธนาคาร")}
+              </div>
+            )}
+            {saleDetail?.saleType == "BORROW" &&
+              saleDetail.status == "RETURNED" && (
+                <div>
+                  {(saleDetail.paymentType == "ITEMS" && "คืนเป็นสินค้า") ||
+                    (saleDetail.paymentType == "CASH" && "คืนเป็นเงิน")}
+                </div>
+              )}
           </p>
           <p className="text-lg">พนักงานขาย: {saleDetail?.userName}</p>
           {saleDetail?.paymentType == "TRANSFER" && (
