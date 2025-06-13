@@ -122,9 +122,7 @@ export async function POST(request: Request) {
             .map((detail) => {
               const productName = detail.product ? detail.product.name : "N/A";
               const quantity = detail.quantity;
-              return `- ${escapeMarkdown(
-                productName
-              )} \\(จำนวน: ${quantity}\\)`;
+              return `- ${escapeMarkdown(productName)} (จำนวน: ${quantity})`;
             })
             .join("\n");
         }
@@ -134,7 +132,7 @@ export async function POST(request: Request) {
         ).padStart(5, "0")}\nผู้ดำเนินการ: ${
           noti.users.name
         }\nรายการสินค้า:\n${productListString}\n\nตรวจสอบรายการได้ที่: ${
-          Config.app_url + `/admin/sales/${noti.id})`
+          Config.app_url + `/admin/salehistory/detail/${noti.id})`
         }`;
 
         const groupNotificationPayload = {
@@ -143,6 +141,40 @@ export async function POST(request: Request) {
         };
 
         sendTelegramNotification(groupNotificationPayload);
+      }
+
+      const lowStockProducts = await prisma.product.findMany({
+        where: {
+          lowStockNotified: true,
+        },
+      });
+
+      if (lowStockProducts && lowStockProducts.length > 0) {
+        for (const product of lowStockProducts) {
+          if (
+            product.stock !== null &&
+            product.restock !== null &&
+            product.stock < product.restock
+          ) {
+            const actualChatId = Config.telegram_chatId;
+
+            const rawText = `📢 **แจ้งเตือนสินค้าใกล้หมดสต็อก** 🚨\n\nชื่อสินค้า: ${product.name}\nจำนวนคงเหลือ: ${product.stock}`;
+
+            const groupNotificationPayload = {
+              chat_id: actualChatId,
+              text: rawText,
+            };
+
+            sendTelegramNotification(groupNotificationPayload);
+
+            await prisma.product.update({
+              where: { id: product.id },
+              data: {
+                lowStockNotified: false,
+              },
+            });
+          }
+        }
       }
 
       return NextResponse.json({ saleId: sale.id }, { status: 200 });

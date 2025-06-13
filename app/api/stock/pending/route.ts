@@ -45,12 +45,7 @@ export async function POST(request: Request) {
     });
 
     const actualChatId = Config.telegram_chatId;
-    const messageText = `📢 มีรายการขอปรับสต็อกใหม่ \n\nชื่อสินค้า: ${noti?.product.name}\nประเภทรายการ: ${noti?.type}\nจำนวน: ${noti?.quantity}\nหมายเหตุ: ${body.note}\n\nดูที่นี่: ${Config.app_url};
-
-    const groupNotificationPayload = {
-      chat_id: actualChatId,
-      text: messageText,
-    }`;
+    const messageText = `📢 มีรายการขอปรับสต็อกใหม่ \n\nชื่อสินค้า: ${noti?.product.name}\nประเภทรายการ: ${noti?.type}\nจำนวน: ${noti?.quantity}\nหมายเหตุ: ${body.note}\n\nดูที่นี่: ${Config.app_url}`;
 
     const groupNotificationPayload = {
       chat_id: actualChatId,

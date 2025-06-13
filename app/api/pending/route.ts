@@ -69,6 +69,7 @@ export async function POST(request: Request) {
             stock: {
               increment: pending.quantity,
             },
+            lowStockNotified: true,
           },
         });
 
@@ -101,6 +102,7 @@ export async function POST(request: Request) {
             stock: {
               decrement: pending.quantity,
             },
+            lowStockNotified: true,
           },
         });
 

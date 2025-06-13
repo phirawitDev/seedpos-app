@@ -95,6 +95,7 @@ export async function POST(request: Request) {
             stock: {
               increment: parseInt(body.quantity),
             },
+            lowStockNotified: true,
           },
         });
       });
@@ -118,6 +119,7 @@ export async function POST(request: Request) {
             stock: {
               decrement: parseInt(body.quantity),
             },
+            lowStockNotified: true,
           },
         });
       });

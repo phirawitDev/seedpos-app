@@ -11,4 +11,5 @@ export interface PorductsInterface {
     id: number;
     name: string;
   };
+  notistock: boolean;
 }

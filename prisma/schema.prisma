@@ -44,17 +44,18 @@ model Category {
 }
 
 model Product {
-  id         Int      @id @default(autoincrement())
-  name       String
-  category   Category @relation(fields: [categoryId], references: [id])
-  categoryId Int
-  costPrice  Float?   @default(0)
-  salePrice  Float?   @default(0)
-  stock      Int?     @default(0)
-  restock    Int?     @default(0)
-  imageUrl   String?
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  id               Int      @id @default(autoincrement())
+  name             String
+  category         Category @relation(fields: [categoryId], references: [id])
+  categoryId       Int
+  costPrice        Float?   @default(0)
+  salePrice        Float?   @default(0)
+  stock            Int?     @default(0)
+  restock          Int?     @default(0)
+  imageUrl         String?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  lowStockNotified Boolean  @default(true)
 
   stockMovement StockMovement[]
   pending       Pending[]
