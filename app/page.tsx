@@ -164,8 +164,8 @@ const Page = () => {
           <Image
             src="/img/475534955_602806375839660_5561232842233835189_n.jpg"
             alt="Img"
-            width={400}
-            height={400}
+            width={1000}
+            height={1000}
             priority
             className="rounded-2xl w-auto h-auto"
           />
